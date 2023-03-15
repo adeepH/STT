@@ -171,13 +171,12 @@ RUN rm -rf kenlm && \
 	cd build && \
 	cmake .. && \
 	make -j $(nproc)
+#WORKDIR /STT/native_client/wasm
+#RUN cmake
 
-WORKDIR /STT/native_client/wasm
-RUN cmake
-
-WORKDIR /STT/STT-examples/wasm
-RUN npm install
-RUN npm run download
-RUN npm run start
+#WORKDIR /STT/STT-examples/wasm
+#RUN npm install
+#RUN npm run download
+#RUN npm run start
 # Done
-#WORKDIR /STT
+WORKDIR /STT

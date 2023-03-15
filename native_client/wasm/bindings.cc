@@ -264,6 +264,21 @@ class Model {
     return metadata;
   }
 
+
+  MetadataStub speechToTextWithEmissions(std::vector<short> audioBuffer,
+                                        unsigned int aNumResults) const {
+    Metadata* tempEmissions = STT_SpeechToTextWithEmissions(
+      this->state, audioBuffer.data(), audioBuffer.size(), aNumResults
+    )
+
+    MetadataStub emissions = MetadataStub::fromMetadata(tempEmissions);
+    // we must manually free the string if something was returned to us
+    STT_FreeMetadata(tempEmissions);
+
+    return emissions
+                                        }
+
+
   Stream* createStream() {
     StreamingState* streamingState;
     int status = STT_CreateStream(this->state, &streamingState);
@@ -306,6 +321,7 @@ EMSCRIPTEN_BINDINGS(coqui_ai_apis) {
       .function("clearHotWords", &Model::clearHotWords)
       .function("speechToText", &Model::speechToText)
       .function("speechToTextWithMetadata", &Model::speechToTextWithMetadata)
+      .function("speechToTextWithEmissions", &Model::speechToTextWithEmissions)
       .function("createStream", &Model::createStream, allow_raw_pointers())
       .function("enableExternalScorer", &Model::enableExternalScorer)
       .function("disableExternalScorer", &Model::disableExternalScorer)

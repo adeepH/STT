@@ -39,7 +39,7 @@ bool init_from_array_of_bytes = false;
 int json_candidate_transcripts = 3;
 
 int stream_size = 0;
-bool keep_emissions = false;
+bool keep_emissions = true;
 int extended_stream_size = 0;
 
 char* hot_words = NULL;
